@@ -57,4 +57,4 @@ float Customer::takeItems(int index) const {
         return 0.0;
     }
 }
-    
+// aa
