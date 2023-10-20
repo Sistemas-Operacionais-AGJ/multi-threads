@@ -3,7 +3,7 @@
 #include <thread>
 #include <random>
 #include "Cozinha.h" // Certifique-se de que "Cozinha.h" está incluído corretamente
-
+                    // Teste do chat gpt                        
 using namespace std;
 
 int main() {
