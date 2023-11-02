@@ -1,11 +1,5 @@
 #include "Customer.h"
-
-Customer::Customer(std::vector<float> chanceToTake, std::vector<float> varianceToTake,
-                   std::vector<float> quantityToTake, std::vector<float> varianceQuantity)
-    : chanceToTake(chanceToTake), varianceToTake(varianceToTake),
-      quantityToTake(quantityToTake), varianceQuantity(varianceQuantity),
-      gen(rd()), dis(0.0, 1.0) {
-}
+using namespace std;
 
 float Customer::getChanceToTake(int index) const {
     return chanceToTake[index];
@@ -50,11 +44,19 @@ float Customer::determineQuantityToTake(int index) const {
     return baseQuantity + randomVariance;
 }
 
-float Customer::takeItems(int index) const {
-    if (decideToTakeItem(index)) {
-        return determineQuantityToTake(index);
-    } else {
-        return 0.0;
-    }
+float Customer::getItemsTaken(int index) const {
+    return varianceQuantity[index];
 }
-// aa
+
+void Customer::setItemsTaken(int index, float value) {
+    itemsTaken[index] = value;
+}
+
+float Customer::takeItems(int index) {
+    if (decideToTakeItem(index)) {
+        setItemsTaken(index, determineQuantityToTake(index));
+
+    } else {
+        setItemsTaken(index, 0.0);
+    } 
+}

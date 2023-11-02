@@ -3,11 +3,12 @@
 
 #include <vector>
 #include <random>
+using namespace std;
 
 class Customer {
 public:
-    Customer(std::vector<float> chanceToTake, std::vector<float> varianceToTake,
-             std::vector<float> quantityToTake, std::vector<float> varianceQuantity);
+    Customer(vector<float> chanceToTake, vector<float> varianceToTake,
+                   vector<float> quantityToTake, vector<float> varianceQuantity) : gen(rd()), dis(0.0, 1.0){}
 
     float getChanceToTake(int index) const;
     void setChanceToTake(int index, float value);
@@ -23,17 +24,20 @@ public:
 
     bool decideToTakeItem(int index) const;
     float determineQuantityToTake(int index) const;
-    float takeItems(int index) const;
+    float takeItems(int index) ;
+    void setItemsTaken(int index, float value)  ;
+    float getItemsTaken(int index) const;
 
 private:
-    std::vector<float> chanceToTake;
-    std::vector<float> varianceToTake;
-    std::vector<float> quantityToTake;
-    std::vector<float> varianceQuantity;
+    vector<float> chanceToTake;
+    vector<float> varianceToTake;
+    vector<float> quantityToTake;
+    vector<float> varianceQuantity;
+    vector<float> itemsTaken;
 
-    std::random_device rd;
-    mutable std::mt19937 gen;
-    mutable std::uniform_real_distribution<float> dis;
+    random_device rd;
+    mutable mt19937 gen;
+    mutable uniform_real_distribution<float> dis;
 };
 
 #endif // CUSTOMER_H
