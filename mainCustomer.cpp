@@ -44,8 +44,8 @@ float Customer::determineQuantityToTake(int index) const {
     return baseQuantity + randomVariance;
 }
 
-float Customer::getItemsTaken(int index) const {
-    return varianceQuantity[index];
+vector<float> Customer::getItemsTaken() const {
+    return itemsTaken;
 }
 
 void Customer::setItemsTaken(int index, float value) {

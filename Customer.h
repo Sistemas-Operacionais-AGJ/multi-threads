@@ -25,8 +25,9 @@ public:
     bool decideToTakeItem(int index) const;
     float determineQuantityToTake(int index) const;
     float takeItems(int index) ;
+
     void setItemsTaken(int index, float value)  ;
-    float getItemsTaken(int index) const;
+    vector<float> getItemsTaken() const;
 
 private:
     vector<float> chanceToTake;

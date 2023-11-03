@@ -158,7 +158,10 @@ varianceQuantity);
     sem_wait(&full);
     sem_wait(&mutex);
     vector<float> tempBuffet = getBuffet();
-    vector<float> tempConsumo = cliente.get
+    vector<float> tempConsumo = cliente.getItemsTaken();
+    for(int j = 0; j<6; j++){
+      tempBuffet[j] = tempBuffet[j] - tempConsumo[j];
+    }
 
     sem_post(&mutex);
     sem_post(&empty);
