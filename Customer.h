@@ -7,8 +7,10 @@ using namespace std;
 
 class Customer {
 public:
-    Customer(vector<float> chanceToTake, vector<float> varianceToTake,
-                   vector<float> quantityToTake, vector<float> varianceQuantity) : gen(rd()), dis(0.0, 1.0){}
+    Customer() : gen(rd()), dis(0.0, 1.0), itemsTaken(6, 0.0f), chanceToTake({0.8, 0.6, 0.8, 0.7, 0.4, 0.9}),
+                 varianceToTake({0.1, 0.1, 0.3, 0.2, 0.2, 0.05}),
+                 quantityToTake({0.03, 0.08, 0.1, 0.07, 0.1, 0.08}),
+                 varianceQuantity({0.02, 0.000001, 0.003, 0.002, 0.005, 0.01}) {}
 
     float getChanceToTake(int index) const;
     void setChanceToTake(int index, float value);
@@ -24,10 +26,11 @@ public:
 
     bool decideToTakeItem(int index) const;
     float determineQuantityToTake(int index) const;
-    float takeItems(int index) ;
+    void takeItems(int index) ;
 
     void setItemsTaken(int index, float value)  ;
     vector<float> getItemsTaken() const;
+    // void getItemsTaken(vector<float>& result) const;
 
 private:
     vector<float> chanceToTake;
