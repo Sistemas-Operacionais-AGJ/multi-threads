@@ -8,7 +8,7 @@ using namespace std;
 
 Buffet::Buffet() {
     // Initialize the buffet with default values
-    buffet = {0.5, 0.5, 0.5, 0.5, 0.5, 0.5};
+    buffet = {0.7, 0.7, 0.7, 0.7, 0.7, 0.7};
 }
 
 void Buffet::setBuffet(int index, float value){

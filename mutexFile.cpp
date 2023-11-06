@@ -30,7 +30,7 @@ Buffet buffet;
 void *produtorSalad(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 5000; i++) {
     kitchen.cookingItems(0);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -54,7 +54,7 @@ void *produtorSalad(void *arg) {
 void *produtorDessert(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 5000; i++) {
     kitchen.cookingItems(1);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -78,7 +78,7 @@ void *produtorDessert(void *arg) {
 void *produtorRice(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 5000; i++) {
     kitchen.cookingItems(2);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -102,7 +102,7 @@ void *produtorRice(void *arg) {
 void *produtorBean(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 5000; i++) {
     kitchen.cookingItems(3);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -126,7 +126,7 @@ void *produtorBean(void *arg) {
 void *produtorComplement(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 5000; i++) {
    kitchen.cookingItems(4);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -150,7 +150,7 @@ void *produtorComplement(void *arg) {
 void *produtorMeat(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 5000; i++) {
     kitchen.cookingItems(5);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -173,8 +173,8 @@ void *produtorMeat(void *arg) {
 
 void *consumidorTeste(void *arg) {
 
-  Customer cliente;
   for (int i = 0; i < 5000; i++) {
+    Customer cliente;
     for (int j = 0; j < 6; j++) {
       cliente.takeItems(j);
     }
