@@ -38,4 +38,3 @@ class Cozinha{
         const int productionTime[6] = {10, 5, 20, 20, 35, 50};
         const int productionTimeVariance[6] = {2, 1, 3, 3, 10, 5};
         int readyForDelivery[6];
-};
