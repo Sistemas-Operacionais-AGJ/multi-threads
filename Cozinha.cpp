@@ -68,12 +68,13 @@ void Cozinha::setMeat(int valor){
 void Cozinha::cookingItems(int food){
 
     if(readyForDelivery[food] == 0){
-        int min = productionTimeVariance[0] * 1;
-        int max = productionTimeVariance[0];
+        int min = productionTimeVariance[food] * -1;
+        int max = productionTimeVariance[food];
         uniform_int_distribution<int> dist(min, max);
         this_thread::sleep_for(chrono::seconds(productionTime[food]+dist(gen)));
+        readyForDelivery[food] = 1;
     }
-    
+
 }
 
 // entrega de itens
@@ -83,4 +84,3 @@ int Cozinha::deliveryItems(int food){
     }else{
         return 1;
     }
-}
