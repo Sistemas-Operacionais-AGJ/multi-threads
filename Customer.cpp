@@ -33,17 +33,13 @@ void Customer::setVarianceQuantity(int index, float value) {
     varianceQuantity[index] = value;
 }
 
-// bool Customer::decideToTakeItem(int index) const {
-//     float randomValue = dis(gen);
-//     return randomValue <= (chanceToTake[index] + varianceToTake[index]);
-// }
+
 bool Customer::decideToTakeItem(int index) const {
     if (index >= 0 && index < chanceToTake.size() && index < varianceToTake.size()) {
         float randomValue = dis(gen);
         return randomValue <= (chanceToTake[index] + varianceToTake[index]);
     } else {
-        // Handle the case when the index is out of bounds
-        // You might want to return false or take some other action.
+       
         return false;
     }
 }
@@ -58,21 +54,10 @@ vector<float> Customer::getItemsTaken() const {
     return itemsTaken;
 }
 
-// void Customer::getItemsTaken(vector<float>& result) const {
-//     result = itemsTaken;
-// }
-
-
 void Customer::setItemsTaken(int index, float value) {
     itemsTaken[index] = value;
 }
 
-
-// void Customer::setItemsTaken(int index, float value) {
-//     if (index >= 0 && index < itemsTaken.size()) {
-//         itemsTaken[index] = value;
-//     }
-// }
 
 void Customer::takeItems(int index) {
     if (decideToTakeItem(index)) {
