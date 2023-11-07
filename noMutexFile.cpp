@@ -29,15 +29,17 @@ void *produtorSalad(void *arg) {
   bool allGreater;
   for (int i = 0; i < 500; i++) {
     kitchen.cookingItems(0);
-    vector<float> tempBuffet = buffet.getBuffet();
+    vector<int> tempBuffet = kitchen.getAllFood();
     while(allGreater == false){
-        if(tempBuffet[0] == 1){
-          allGreater = false;
-        } else {
-          allGreater = true;
-          break;
-        }
+      if(tempBuffet[0] == 1){
+        allGreater = false;
+      } else {
+        allGreater = true;
+        break;
       }
+    }
+
+    kitchen.setFood(0, 0);
     buffet.setBuffet(0, 1.0);
     printf("Salada Feita\n");
   }
@@ -49,7 +51,7 @@ void *produtorDessert(void *arg) {
   bool allGreater;
   for (int i = 0; i < 500; i++) {
     kitchen.cookingItems(1);
-    vector<float> tempBuffet = buffet.getBuffet();
+    vector<int> tempBuffet = kitchen.getAllFood();
     while(allGreater == false){
         if(tempBuffet[1] == 1){
           allGreater = false;
@@ -59,6 +61,7 @@ void *produtorDessert(void *arg) {
         }
       }
 
+    kitchen.setFood(1, 0);
     buffet.setBuffet(1, 1.0);
     printf("Sobremesa Feita\n");
 
@@ -71,16 +74,17 @@ void *produtorRice(void *arg) {
   bool allGreater;
   for (int i = 0; i < 500; i++) {
     kitchen.cookingItems(2);
-    vector<float> tempBuffet = buffet.getBuffet();
+    vector<int> tempBuffet = kitchen.getAllFood();
     while(allGreater == false){
-        if(tempBuffet[2] == 1){
-          allGreater = false;
-        } else {
-          allGreater = true;
-          break;
-        }
+      if(tempBuffet[2] == 1){
+        allGreater = false;
+      } else {
+        allGreater = true;
+        break;
       }
+    }
 
+    kitchen.setFood(2, 0);
     buffet.setBuffet(2, 1.0);
     printf("Arroz Feito\n");
 
@@ -93,16 +97,17 @@ void *produtorBean(void *arg) {
   bool allGreater;
   for (int i = 0; i < 500; i++) {
     kitchen.cookingItems(3);
-    vector<float> tempBuffet = buffet.getBuffet();
+    vector<int> tempBuffet = kitchen.getAllFood();
     while(allGreater == false){
-        if(tempBuffet[3] == 1){
-          allGreater = false;
-        } else {
-          allGreater = true;
-          break;
-        }
+      if(tempBuffet[3] == 1){
+        allGreater = false;
+      } else {
+        allGreater = true;
+        break;
       }
+    }
  
+    kitchen.setFood(3, 0);
     buffet.setBuffet(3, 1.0);
     printf("Feijão Feito\n");
 
@@ -114,17 +119,18 @@ void *produtorComplement(void *arg) {
   Kitchen kitchen;
   bool allGreater;
   for (int i = 0; i < 500; i++) {
-   kitchen.cookingItems(4);
-    vector<float> tempBuffet = buffet.getBuffet();
+    kitchen.cookingItems(4);
+    vector<int> tempBuffet = kitchen.getAllFood();
     while(allGreater == false){
-        if(tempBuffet[4] == 1){
-          allGreater = false;
-        } else {
-          allGreater = true;
-          break;
-        }
+      if(tempBuffet[4] == 1){
+        allGreater = false;
+      } else {
+        allGreater = true;
+        break;
       }
+    }
 
+    kitchen.setFood(4, 0);
     buffet.setBuffet(4, 1.0);
     printf("Complemento Feito\n");
 
@@ -137,16 +143,17 @@ void *produtorMeat(void *arg) {
   bool allGreater;
   for (int i = 0; i < 500; i++) {
     kitchen.cookingItems(5);
-    vector<float> tempBuffet = buffet.getBuffet();
+    vector<int> tempBuffet = kitchen.getAllFood();
     while(allGreater == false){
-        if(tempBuffet[5] == 1){
-          allGreater = false;
-        } else {
-          allGreater = true;
-          break;
-        }
+      if(tempBuffet[5] == 1){
+        allGreater = false;
+      } else {
+        allGreater = true;
+        break;
       }
+    }
 
+    kitchen.setFood(5, 0);
     buffet.setBuffet(5, 1.0);
     printf("Carne Feita\n");
 
@@ -161,7 +168,7 @@ void *consumidorTeste(void *arg) {
     for (int j = 0; j < 6; j++) {
       cliente.takeItems(j);
     }
-    vector<float> tempBuffet;
+    vector<int> tempBuffet;
     vector<float> tempConsumo;
 
     buffet.printBuffet();

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <random>
 #include <thread>
+#include <vector>
 
 using namespace std;
 
@@ -30,6 +31,15 @@ int Kitchen::getComplement() { return readyForDelivery[4]; }
 
 int Kitchen::getMeat() { return readyForDelivery[5]; }
 
+vector<int> Kitchen::getAllFood() {
+  vector<int> allFoods = {0, 0, 0, 0, 0, 0};
+  for (int i = 0; i < 6; i++)
+  {
+    allFoods[i] = readyForDelivery[i];
+  }
+  return allFoods;
+}
+
 // Setters
 
 void Kitchen::setSalad(int valor) { readyForDelivery[0] = valor; }
@@ -43,6 +53,8 @@ void Kitchen::setBean(int valor) { readyForDelivery[3] = valor; }
 void Kitchen::setComplement(int valor) { readyForDelivery[4] = valor; }
 
 void Kitchen::setMeat(int valor) { readyForDelivery[5] = valor; }
+
+void Kitchen::setFood(int i, int valor) { readyForDelivery[i] = valor; }
 
 // preparo de itens
 void Kitchen::cookingItems(int food) {
@@ -64,3 +76,4 @@ int Kitchen::deliveryItems(int food) {
     return 1;
   }
 }
+

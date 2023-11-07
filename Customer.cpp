@@ -54,6 +54,10 @@ vector<float> Customer::getItemsTaken() const {
     return itemsTaken;
 }
 
+float Customer::getItemsTaken(int i) const {
+    return itemsTaken[i];
+}
+
 void Customer::setItemsTaken(int index, float value) {
     itemsTaken[index] = value;
 }

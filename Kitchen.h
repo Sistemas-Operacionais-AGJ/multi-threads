@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <iostream>
+#include <vector>
 using namespace std;
 using namespace chrono;
 
@@ -18,6 +19,7 @@ public:
   int getComplement();
 
   int getMeat();
+  vector<int> getAllFood();
 
   // set 6 alimentos
 
@@ -27,7 +29,7 @@ public:
   void setBean(int valor);
   void setComplement(int valor);
   void setMeat(int valor);
-
+  void setFood(int i, int valor);
   // preparo de itens
   void cookingItems(int food);
 
