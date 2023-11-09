@@ -30,6 +30,7 @@ public:
 
     void setItemsTaken(int index, float value)  ;
     vector<float> getItemsTaken() const;
+    float getItemsTaken(int i) const;
     // void getItemsTaken(vector<float>& result) const;
 
 private:

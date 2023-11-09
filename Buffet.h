@@ -13,6 +13,7 @@ public:
     vector<float> getBuffet();
     void printBuffet();
     void setBuffetCustomer(const vector<float>& newBuffet);
+    float getBuffet(int i);
 };
 
 #endif  // BUFFET_H
