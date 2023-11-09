@@ -24,25 +24,42 @@ volatile int count;
 
 Buffet buffet;
 
-void timer(clock_t startTime){
-  vector<float> temporaryBuffet;
-  do
-  {
-    temporaryBuffet = buffet.getBuffet();
-  } while (temporaryBuffet[0] > 0 || temporaryBuffet[1] > 0 || temporaryBuffet[2] > 0 || temporaryBuffet[3] > 0 || temporaryBuffet[4] > 0 || temporaryBuffet[5] > 0);
+// void timer(clock_t startTime){
+//   vector<float> temporaryBuffet;
+//   do
+//   {
+//     temporaryBuffet = buffet.getBuffet();
+//   } while (temporaryBuffet[0] > 0 || temporaryBuffet[1] > 0 || temporaryBuffet[2] > 0 || temporaryBuffet[3] > 0 || temporaryBuffet[4] > 0 || temporaryBuffet[5] > 0);
   
 
-  cout << endl << endl << endl << endl; 
+//   cout << endl << endl << endl << endl; 
 
-  cout << temporaryBuffet[0] << temporaryBuffet[1] << temporaryBuffet[2] << temporaryBuffet[3] << temporaryBuffet[4] << temporaryBuffet[5] << endl;
-  clock_t endTime = clock();
-  cout << endTime << " - " << startTime << " / " << CLOCKS_PER_SEC << endl;
-  cout << "Tempo =" << (float)(((endTime - startTime)/CLOCKS_PER_SEC)/10000) << endl;
+//   cout << temporaryBuffet[0] << temporaryBuffet[1] << temporaryBuffet[2] << temporaryBuffet[3] << temporaryBuffet[4] << temporaryBuffet[5] << endl;
+//   clock_t endTime = clock();
+//   cout << endTime << " - " << startTime << " / " << CLOCKS_PER_SEC << endl;
+//   cout << "Tempo =" << (float)(((endTime - startTime)/CLOCKS_PER_SEC)/10000) << endl;
 
-  cout << endl << endl << endl << endl;
+//   cout << endl << endl << endl << endl;
 
-  exit(1);
+//   exit(1);
+// }
+void timer(clock_t inicioTempo){
+  vector<float> tempBuffet = buffet.getBuffet();
+  cout << "Timer =" << tempBuffet[0] << tempBuffet[1] << tempBuffet[2] << tempBuffet[3] << tempBuffet[4] << tempBuffet[5] ;
+  while (true)
+  {
+    tempBuffet = buffet.getBuffet();
+    if (tempBuffet[0] <= 0 && tempBuffet[1] <= 0 && tempBuffet[2] <= 0 && tempBuffet[3] <= 0 && tempBuffet[4] <= 0 && tempBuffet[5] <= 0)
+    {
+      clock_t fimTempo = clock();
+      printf("Tempo de execução = %f\n", (float)(((fimTempo - inicioTempo) + 0.0) / CLOCKS_PER_SEC));
+      exit(1);
+    }
+    
+  }
+  
 }
+
 
 void buffetSet(int i, float quantity){
   float temporaryBuffet = buffet.getBuffet(i);
@@ -66,7 +83,8 @@ void *consumidorTeste(void *arg) {
 
 int main() {
   pthread_t consumer0, consumer1, consumer2, consumer3, consumer4, consumer5, consumer6, consumer7, consumer8, consumer9;
-
+  clock_t inicioTempo, fimTempo;
+  float tempo = 0.0;
   buffet.printBuffet();
   pthread_create(&consumer0, NULL, &consumidorTeste, NULL);
   pthread_create(&consumer1, NULL, &consumidorTeste, NULL);
@@ -79,8 +97,8 @@ int main() {
   // pthread_create(&consumer8, NULL, &consumidorTeste, NULL);
   // pthread_create(&consumer9, NULL, &consumidorTeste, NULL);
 
-  clock_t startTime = clock();
-  timer(startTime);
+  inicioTempo = clock();
+  timer(inicioTempo);
   pthread_join(consumer0, NULL);
   pthread_join(consumer1, NULL);
   pthread_join(consumer2, NULL);
@@ -94,5 +112,10 @@ int main() {
 
   sleep(1);
   printf("Threads finalizadas \n");
+  fimTempo = clock();
+
+  tempo = (float)(((fimTempo - inicioTempo) + 0.0) / CLOCKS_PER_SEC);
+  cout << tempo;
+  
   return 0;
 }
