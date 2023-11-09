@@ -10,7 +10,7 @@
 
 #include <vector>
 
-//g++ -o myprogram texiste.cpp Kitchen.cpp Buffet.cpp Customer.cpp -lpthread 
+//g++ -o myprogram noMutex.cpp Kitchen.cpp Buffet.cpp Costumer.cpp -lpthread
 // salada, sobremesa, arroz, feijao, complemento e carne
 // vector<float> chanceToTake = {0.8, 0.6, 0.8, 0.7, 0.4, 0.9};
 // vector<float> varianceToTake = {0.1, 0.1, 0.3, 0.2, 0.2, 0.05};
@@ -27,7 +27,7 @@ Buffet buffet;
 void *produtorSalad(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 1; i++) {
     kitchen.cookingItems(0);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -47,7 +47,7 @@ void *produtorSalad(void *arg) {
 void *produtorDessert(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 1; i++) {
     kitchen.cookingItems(1);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -69,7 +69,7 @@ void *produtorDessert(void *arg) {
 void *produtorRice(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 1; i++) {
     kitchen.cookingItems(2);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -91,7 +91,7 @@ void *produtorRice(void *arg) {
 void *produtorBean(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 1; i++) {
     kitchen.cookingItems(3);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -102,7 +102,7 @@ void *produtorBean(void *arg) {
           break;
         }
       }
- 
+
     buffet.setBuffet(3, 1.0);
     printf("Feijão Feito\n");
 
@@ -113,7 +113,7 @@ void *produtorBean(void *arg) {
 void *produtorComplement(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 1; i++) {
    kitchen.cookingItems(4);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -135,7 +135,7 @@ void *produtorComplement(void *arg) {
 void *produtorMeat(void *arg) {
   Kitchen kitchen;
   bool allGreater;
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 1; i++) {
     kitchen.cookingItems(5);
     vector<float> tempBuffet = buffet.getBuffet();
     while(allGreater == false){
@@ -157,7 +157,7 @@ void *produtorMeat(void *arg) {
 void *consumidorTeste(void *arg) {
 
   Customer cliente;
-  for (int i = 0; i < 5000; i++) {
+  for (int i = 0; i < 5; i++) {
     for (int j = 0; j < 6; j++) {
       cliente.takeItems(j);
     }
@@ -172,11 +172,11 @@ void *consumidorTeste(void *arg) {
     } else {
       tempBuffet[0] = 0;
     }
-    
-    
+
+
     buffet.setBuffet(0, tempBuffet[0]);
-    cout << "Setou Salada" << endl;
-    
+    cout << "Consumiu Salada" << endl;
+
 
     buffet.printBuffet();
     tempBuffet = buffet.getBuffet();
@@ -187,7 +187,7 @@ void *consumidorTeste(void *arg) {
       tempBuffet[1] = 0;
     }
     buffet.setBuffet(1, tempBuffet[1]);
-    cout << "Setou Sobremesa" << endl;
+    cout << "Consumiu Sobremesa" << endl;
 
     buffet.printBuffet();
     tempBuffet = buffet.getBuffet();
@@ -197,9 +197,9 @@ void *consumidorTeste(void *arg) {
     } else {
       tempBuffet[2] = 0;
     }
-    
+
     buffet.setBuffet(2, tempBuffet[2]);
-    cout << "Setou Arroz" << endl;
+    cout << "Consumiu Arroz" << endl;
 
     buffet.printBuffet();
     tempBuffet = buffet.getBuffet();
@@ -210,7 +210,7 @@ void *consumidorTeste(void *arg) {
       tempBuffet[3] = 0;
     }
     buffet.setBuffet(3, tempBuffet[3]);
-    cout << "Setou Feijão" << endl;
+    cout << "Consumiu Feijão" << endl;
 
     buffet.printBuffet();
     tempBuffet = buffet.getBuffet();
@@ -221,7 +221,7 @@ void *consumidorTeste(void *arg) {
       tempBuffet[4] = 0;
     }
     buffet.setBuffet(4, tempBuffet[4]);
-    cout << "Setou Complemento" << endl;
+    cout << "Consumiu Complemento" << endl;
 
     buffet.printBuffet();
     tempBuffet = buffet.getBuffet();
@@ -231,9 +231,9 @@ void *consumidorTeste(void *arg) {
     } else {
       tempBuffet[5] = 0;
     }
-    
+
     buffet.setBuffet(5, tempBuffet[5]);
-    cout << "Setou Carne" << endl;
+    cout << "Consumiu Carne" << endl;
 
 
     buffet.printBuffet();
@@ -252,23 +252,26 @@ int main() {
 
 
   buffet.printBuffet();
-  pthread_create(&consumer0, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer1, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer2, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer3, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer4, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer5, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer6, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer7, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer8, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer9, NULL, &consumidorTeste, NULL);
-
   pthread_create(&KitchenSalad, NULL, &produtorSalad, NULL);
   pthread_create(&KitchenDessert, NULL, &produtorDessert, NULL);
   pthread_create(&KitchenRice, NULL, &produtorRice, NULL);
   pthread_create(&KitchenBean, NULL, &produtorBean, NULL);
   pthread_create(&KitchenComplement, NULL, &produtorComplement, NULL);
   pthread_create(&KitchenMeat, NULL, &produtorMeat, NULL);
+
+
+  pthread_create(&consumer0, NULL, &consumidorTeste, NULL);
+  pthread_create(&consumer1, NULL, &consumidorTeste, NULL);
+  pthread_create(&consumer2, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer3, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer4, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer5, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer6, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer7, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer8, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer9, NULL, &consumidorTeste, NULL);
+
+  
 
 
   pthread_join(KitchenSalad, NULL);

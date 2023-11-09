@@ -7,10 +7,12 @@
 #include <syscall.h>
 #include <unistd.h>
 #include "Buffet.h"
+#include <time.h>
+
 
 #include <vector>
 
-//g++ -o myprogram texiste.cpp Kitchen.cpp Buffet.cpp Customer.cpp -lpthread 
+//g++ -o myprogram mainMutex.cpp Kitchen.cpp Buffet.cpp Costumer.cpp -lpthread
 // salada, sobremesa, arroz, feijao, complemento e carne
 // vector<float> chanceToTake = {0.8, 0.6, 0.8, 0.7, 0.4, 0.9};
 // vector<float> varianceToTake = {0.1, 0.1, 0.3, 0.2, 0.2, 0.05};
@@ -21,11 +23,29 @@ sem_t fullSalad, fullDessert, fullRice, fullBean, fullComplement, fullMeat;
 sem_t emptySalad, emptyDessert, emptyRice, emptyBean, emptyComplement, emptyMeat;
 sem_t mutexSalad, mutexDessert, mutexRice, mutexBean, mutexComplement, mutexMeat;
 
+
 #define N 6
 volatile int buffer[N];
 volatile int count;
 
 Buffet buffet;
+
+void timer(clock_t inicioTempo){
+  vector<float> tempBuffet = buffet.getBuffet();
+  cout << "Timer =" << tempBuffet[0] << tempBuffet[1] << tempBuffet[2] << tempBuffet[3] << tempBuffet[4] << tempBuffet[5] ;
+  while (true)
+  {
+    tempBuffet = buffet.getBuffet();
+    if (tempBuffet[0] <= 0 && tempBuffet[1] <= 0 && tempBuffet[2] <= 0 && tempBuffet[3] <= 0 && tempBuffet[4] <= 0 && tempBuffet[5] <= 0)
+    {
+      clock_t fimTempo = clock();
+      printf("Tempo de execução = %f\n", (float)(((fimTempo - inicioTempo) + 0.0) / CLOCKS_PER_SEC));
+      exit(1);
+    }
+    
+  }
+  
+}
 
 void *produtorSalad(void *arg) {
   Kitchen kitchen;
@@ -33,18 +53,18 @@ void *produtorSalad(void *arg) {
   for (int i = 0; i < 5000; i++) {
     kitchen.cookingItems(0);
     vector<float> tempBuffet = buffet.getBuffet();
-    while(allGreater == false){
-        if(tempBuffet[0] == 1){
-          allGreater = false;
-        } else {
-          allGreater = true;
-          break;
-        }
-      }
+    // while(allGreater == false){
+        // if(tempBuffet[0] == 1){
+          // allGreater = false;
+        // } else {
+          // allGreater = true;
+          // break;
+        // }
+      // }
     sem_wait(&emptySalad);
     sem_wait(&mutexSalad);
-    buffet.setBuffet(0, 1.0);
-    printf("Salada Feita\n");
+    // buffet.setBuffet(0, 1.0);
+    // printf("Salada Feita\n");
     sem_post(&fullSalad);
     sem_post(&mutexSalad);
   }
@@ -67,8 +87,8 @@ void *produtorDessert(void *arg) {
       }
     sem_wait(&emptyDessert);
     sem_wait(&mutexDessert);
-    buffet.setBuffet(1, 1.0);
-    printf("Sobremesa Feita\n");
+    // buffet.setBuffet(1, 1.0);
+    // printf("Sobremesa Feita\n");
     sem_post(&fullDessert);
     sem_post(&mutexDessert);
   }
@@ -91,8 +111,8 @@ void *produtorRice(void *arg) {
       }
     sem_wait(&emptyRice);
     sem_wait(&mutexRice);
-    buffet.setBuffet(2, 1.0);
-    printf("Arroz Feito\n");
+    // buffet.setBuffet(2, 1.0);
+    // printf("Arroz Feito\n");
     sem_post(&fullRice);
     sem_post(&mutexRice);
   }
@@ -115,8 +135,8 @@ void *produtorBean(void *arg) {
       }
     sem_wait(&emptyBean);
     sem_wait(&mutexBean);
-    buffet.setBuffet(3, 1.0);
-    printf("Feijão Feito\n");
+    // buffet.setBuffet(3, 1.0);
+    // printf("Feijão Feito\n");
     sem_post(&fullBean);
     sem_post(&mutexBean);
   }
@@ -139,8 +159,8 @@ void *produtorComplement(void *arg) {
       }
     sem_wait(&emptyComplement);
     sem_wait(&mutexComplement);
-    buffet.setBuffet(4, 1.0);
-    printf("Complemento Feito\n");
+    // buffet.setBuffet(4, 1.0);
+    // printf("Complemento Feito\n");
     sem_post(&fullComplement);
     sem_post(&mutexComplement);
   }
@@ -163,8 +183,8 @@ void *produtorMeat(void *arg) {
       }
     sem_wait(&emptyMeat);
     sem_wait(&mutexMeat);
-    buffet.setBuffet(5, 1.0);
-    printf("Carne Feita\n");
+    // buffet.setBuffet(5, 1.0);
+    // printf("Carne Feita\n");
     sem_post(&fullMeat);
     sem_post(&mutexMeat);
   }
@@ -173,7 +193,7 @@ void *produtorMeat(void *arg) {
 
 void *consumidorTeste(void *arg) {
 
-  for (int i = 0; i < 5000; i++) {
+  for (int i = 0; i < 10; i++) {
     Customer cliente;
     for (int j = 0; j < 6; j++) {
       cliente.takeItems(j);
@@ -190,11 +210,11 @@ void *consumidorTeste(void *arg) {
     } else {
       tempBuffet[0] = 0;
     }
-    
-    
+
+
     buffet.setBuffet(0, tempBuffet[0]);
     cout << "Consumiu Salada" << endl;
-    
+
     sem_post(&mutexSalad);
     sem_post(&emptySalad);
 
@@ -224,7 +244,7 @@ void *consumidorTeste(void *arg) {
     } else {
       tempBuffet[2] = 0;
     }
-    
+
     buffet.setBuffet(2, tempBuffet[2]);
     cout << "Consumiu Arroz" << endl;
     sem_post(&mutexRice);
@@ -271,7 +291,7 @@ void *consumidorTeste(void *arg) {
     } else {
       tempBuffet[5] = 0;
     }
-    
+
     buffet.setBuffet(5, tempBuffet[5]);
     cout << "Consumiu Carne" << endl;
     sem_post(&mutexMeat);
@@ -289,8 +309,9 @@ int main() {
   pthread_t KitchenSalad, KitchenDessert, KitchenRice, KitchenBean,
       KitchenComplement, KitchenMeat;
 
-  Kitchen Kitchen;
-  
+  clock_t inicioTempo, fimTempo;
+  float tempo = 0.0;
+
   sem_init(&fullSalad, 0, 0);
   sem_init(&emptySalad, 0, N);
   sem_init(&mutexSalad, 0, 1);
@@ -303,11 +324,11 @@ int main() {
   sem_init(&emptyRice, 0, N);
   sem_init(&mutexRice, 0, 1);
 
-  
+
   sem_init(&fullBean, 0, 0);
   sem_init(&emptyBean, 0, N);
   sem_init(&mutexBean, 0, 1);
-  
+
   sem_init(&fullComplement, 0, 0);
   sem_init(&emptyComplement, 0, N);
   sem_init(&mutexComplement, 0, 1);
@@ -324,9 +345,9 @@ int main() {
   pthread_create(&consumer4, NULL, &consumidorTeste, NULL);
   pthread_create(&consumer5, NULL, &consumidorTeste, NULL);
   pthread_create(&consumer6, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer7, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer8, NULL, &consumidorTeste, NULL);
-  pthread_create(&consumer9, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer7, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer8, NULL, &consumidorTeste, NULL);
+  // pthread_create(&consumer9, NULL, &consumidorTeste, NULL);
 
   pthread_create(&KitchenSalad, NULL, &produtorSalad, NULL);
   pthread_create(&KitchenDessert, NULL, &produtorDessert, NULL);
@@ -335,7 +356,8 @@ int main() {
   pthread_create(&KitchenComplement, NULL, &produtorComplement, NULL);
   pthread_create(&KitchenMeat, NULL, &produtorMeat, NULL);
 
-
+  inicioTempo = clock();
+  timer(inicioTempo);
   pthread_join(KitchenSalad, NULL);
   pthread_join(KitchenDessert, NULL);
   pthread_join(KitchenRice, NULL);
@@ -350,12 +372,17 @@ int main() {
   pthread_join(consumer4, NULL);
   pthread_join(consumer5, NULL);
   pthread_join(consumer6, NULL);
-  pthread_join(consumer7, NULL);
-  pthread_join(consumer8, NULL);
-  pthread_join(consumer9, NULL);
-
-  sleep(1);
+  // pthread_join(consumer7, NULL);
+  // pthread_join(consumer8, NULL);
+  // pthread_join(consumer9, NULL);
+  
   buffet.printBuffet();
   printf("Threads finalizadas \n");
+  fimTempo = clock();
+  sleep(1);
+  
+  tempo = (float)(((fimTempo - inicioTempo) + 0.0) / CLOCKS_PER_SEC);
+  cout << tempo;
+
   return 0;
 }

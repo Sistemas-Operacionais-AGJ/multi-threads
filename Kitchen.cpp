@@ -10,19 +10,12 @@ using namespace std;
 random_device rd;
 mt19937 gen(rd());
 
-
 // getters
 
-int Kitchen::getSalad() {
-   return readyForDelivery[0]; 
-   }
+int Kitchen::getSalad() { return readyForDelivery[0]; }
 
-int Kitchen::getDessert() {
-   return readyForDelivery[1]; 
-   }
-int Kitchen::getRice() {
-   return readyForDelivery[2]; 
-   }
+int Kitchen::getDessert() { return readyForDelivery[1]; }
+int Kitchen::getRice() { return readyForDelivery[2]; }
 
 int Kitchen::getBean() { return readyForDelivery[3]; }
 

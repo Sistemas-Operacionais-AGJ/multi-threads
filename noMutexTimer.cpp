@@ -63,7 +63,12 @@ void *consumidorTeste(void *arg) {
 
 int main() {
   pthread_t consumer0, consumer1, consumer2, consumer3, consumer4, consumer5, consumer6, consumer7, consumer8, consumer9;
+<<<<<<< HEAD
 
+=======
+  clock_t inicioTempo, fimTempo;
+  float tempo = 0.0;
+>>>>>>> timeTests
   buffet.printBuffet();
   pthread_create(&consumer0, NULL, &consumidorTeste, NULL);
   pthread_create(&consumer1, NULL, &consumidorTeste, NULL);
@@ -76,8 +81,13 @@ int main() {
   // pthread_create(&consumer8, NULL, &consumidorTeste, NULL);
   // pthread_create(&consumer9, NULL, &consumidorTeste, NULL);
 
+<<<<<<< HEAD
   clock_t startTime = clock();
   timer(startTime);
+=======
+  inicioTempo = clock();
+  timer(inicioTempo);
+>>>>>>> timeTests
   pthread_join(consumer0, NULL);
   pthread_join(consumer1, NULL);
   pthread_join(consumer2, NULL);
@@ -91,5 +101,13 @@ int main() {
 
   sleep(1);
   printf("Threads finalizadas \n");
+<<<<<<< HEAD
+=======
+  fimTempo = clock();
+
+  tempo = (float)(((fimTempo - inicioTempo) + 0.0) / CLOCKS_PER_SEC);
+  cout << tempo;
+  
+>>>>>>> timeTests
   return 0;
 }

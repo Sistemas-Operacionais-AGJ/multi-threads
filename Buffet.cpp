@@ -1,6 +1,3 @@
-
-
-
 #include "Buffet.h"
 #include <iostream>
 using namespace std;
@@ -11,17 +8,13 @@ Buffet::Buffet() {
     buffet = {0.9, 0.9, 0.9, 0.9, 0.9, 0.9};
 }
 
-void Buffet::setBuffet(int index, float value){
-        buffet[index] = value;
+void Buffet::setBuffet(int index, float value) { buffet[index] = value; }
+
+void Buffet::setBuffetCustomer(const vector<float> &newBuffet) {
+  buffet = newBuffet;
 }
 
-void Buffet::setBuffetCustomer(const vector<float>& newBuffet) {
-    buffet = newBuffet;
-}
-
-vector<float> Buffet::getBuffet() {
-    return buffet;
-}
+vector<float> Buffet::getBuffet() { return buffet; }
 
 void Buffet::printBuffet() {
     for (int i = 0; i < 6; i++) {
